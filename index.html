@@ -1,1289 +1,1116 @@
-<!DOCTYPE html><html lang="en"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LET'S STARTED</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/all.min.css">
-  <style>
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-    }
-
-    :root {
-      --harvey-dark: #1f4037;
-      --harvey-light: #99f2c8;
-      --dark-bg: linear-gradient(180deg, #2c5364 0%, #203a43 50%, #0f2027 100%);
-      --light-bg: linear-gradient(180deg, #99f2c8 0%, #1f4037 100%);
-      --glass-bg-dark: rgba(255, 255, 255, 0.05);
-      --glass-bg-light: rgba(255, 255, 255, 0.08);
-      --glass-border-dark: rgba(255, 255, 255, 0.1);
-      --glass-border-light: rgba(255, 255, 255, 0.15);
-      --text-primary-dark: #ffffff;
-      --text-primary-light: #ffffff;
-      --text-secondary-dark: rgba(255, 255, 255, 0.9);
-      --text-secondary-light: rgba(255, 255, 255, 0.9);
-      --shadow-light: 0 8px 32px rgba(31, 64, 55, 0.2);
-      --shadow-heavy: 0 20px 60px rgba(31, 64, 55, 0.3);
-    }
-
-    [data-theme="dark"] {
-      --current-bg: var(--dark-bg);
-      --glass-bg: var(--glass-bg-dark);
-      --glass-border: var(--glass-border-dark);
-      --text-primary: var(--text-primary-dark);
-      --text-secondary: var(--text-secondary-dark);
-    }
-
-    [data-theme="light"] {
-      --current-bg: var(--light-bg);
-      --glass-bg: var(--glass-bg-light);
-      --glass-border: var(--glass-border-light);
-      --text-primary: var(--text-primary-light);
-      --text-secondary: var(--text-secondary-light);
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--current-bg);
-      color: var(--text-primary);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-      overflow-x: hidden;
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: background;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: -1;
-      animation: floatingBg 20s ease-in-out infinite;
-    }
-
-    @keyframes floatingBg {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33% { transform: translateY(-20px) rotate(1deg); }
-      66% { transform: translateY(20px) rotate(-1deg); }
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 50px;
-      padding: 0.8rem;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1000;
-      color: var(--text-primary);
-      font-size: 1.2rem;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      will-change: transform, background;
-    }
-
-    .theme-toggle:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: scale(1.1) rotate(180deg);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .theme-toggle:active {
-      transform: scale(0.95) rotate(180deg);
-    }
-
-    .container, .main-content {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 2.5rem;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: var(--shadow-light);
-      display: none;
-      animation: slideUpFade 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform, opacity;
-    }
-
-    .container::before, .main-content::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      border-radius: 24px 24px 0 0;
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.8; }
-    }
-
-    #shop {
-      max-width: 600px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(25px);
-    }
-
-    #payment {
-      max-width: 550px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(25px);
-    }
-
-    .profile-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid rgba(255, 255, 255, 0.3);
-      margin-bottom: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
-      animation: profileFloat 6s ease-in-out infinite;
-    }
-
-    @keyframes profileFloat {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-10px) scale(1.02); }
-    }
-
-    .profile-img:hover {
-      transform: scale(1.1) rotate(5deg);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      color: var(--text-primary);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      font-family: 'Inter', sans-serif;
-      animation: textGlow 4s ease-in-out infinite;
-    }
-
-    @keyframes textGlow {
-      0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
-      50% { text-shadow: 2px 2px 20px rgba(255, 255, 255, 0.3); }
-    }
-
-    .section-title {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--text-primary);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      font-family: 'Inter', sans-serif;
-      animation: titleSlide 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes titleSlide {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .typing-text {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-      min-height: 2rem;
-      font-weight: 400;
-      line-height: 1.6;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
-    }
-
-    .social-links {
-      margin: 2rem 0;
-    }
-
-    .social-links a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: flex-start;
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-primary);
-      text-decoration: none;
-      padding: 1rem 1.5rem;
-      margin: 0.8rem 0;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      font-weight: 500;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      will-change: transform, background;
-      animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      animation-delay: calc(var(--delay, 0) * 0.1s);
-    }
-
-    .social-links a:nth-child(1) { --delay: 1; }
-    .social-links a:nth-child(2) { --delay: 2; }
-    .social-links a:nth-child(3) { --delay: 3; }
-
-    .social-links a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateX(15px) scale(1.02);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    }
-
-    .social-links a:active {
-      transform: translateX(15px) scale(0.98);
-    }
-
-    .social-links i {
-      width: 24px;
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover i {
-      transform: scale(1.2) rotate(10deg);
-    }
-
-    .loading-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: var(--current-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 9999;
-      animation: fadeOut 1.5s 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
-
-    .loading-screen h1 {
-      font-size: 2.5rem;
-      animation: loadingPulse 2s ease-in-out infinite;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .loading-spinner {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      border-top: 4px solid var(--text-primary);
-      border-radius: 50%;
-      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      margin-top: 2rem;
-    }
-
-    .loading-dots {
-      display: flex;
-      gap: 8px;
-      margin-top: 1rem;
-    }
-
-    .loading-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--text-primary);
-      border-radius: 50%;
-      animation: dotBounce 1.4s ease-in-out infinite;
-    }
-
-    .loading-dot:nth-child(1) { animation-delay: 0s; }
-    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-    @keyframes dotBounce {
-      0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
-      40% { transform: scale(1.2); opacity: 1; }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes loadingPulse {
-      0%, 100% { opacity: 0.7; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.05); }
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    @keyframes slideUpFade {
-      from { opacity: 0; transform: translateY(50px) scale(0.9); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-      color: var(--harvey-dark);
-      font-weight: 600;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      min-width: 140px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      position: relative;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      will-change: transform;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .btn-primary:active {
-      transform: translateY(-1px) scale(1.02);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-primary);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-weight: 500;
-      padding: 0.8rem 1.5rem;
-      font-size: 0.95rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-      will-change: transform;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary:active {
-      transform: translateY(0);
-    }
-
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 2rem 0;
-    }
-
-    .product-grid {
-      display: grid;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .product-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      will-change: transform;
-      animation: cardSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      animation-delay: calc(var(--card-delay, 0) * 0.1s);
-    }
-
-    .product-card:nth-child(1) { --card-delay: 1; }
-    .product-card:nth-child(2) { --card-delay: 2; }
-    .product-card:nth-child(3) { --card-delay: 3; }
-    .product-card:nth-child(4) { --card-delay: 4; }
-
-    @keyframes cardSlideIn {
-      from { opacity: 0; transform: translateY(50px) rotateX(10deg); }
-      to { opacity: 1; transform: translateY(0) rotateX(0deg); }
-    }
-
-    .product-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
-    .product-card:hover {
-      transform: translateY(-15px) scale(1.02);
-      box-shadow: var(--shadow-heavy);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .product-card:hover::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .product-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .product-img {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .product-card:hover .product-img {
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .product-info h3 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .product-category {
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--text-primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .product-card:hover .product-category {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.05);
-    }
-
-    .product-description {
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      font-size: 0.95rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .product-price {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text-primary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-      animation: priceGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes priceGlow {
-      0%, 100% { text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); }
-      50% { text-shadow: 1px 1px 15px rgba(255, 255, 255, 0.3); }
-    }
-
-    .payment-method {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      will-change: transform;
-      animation: paymentSlide 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      animation-delay: calc(var(--payment-delay, 0) * 0.15s);
-    }
-
-    .payment-method:nth-child(1) { --payment-delay: 1; }
-    .payment-method:nth-child(2) { --payment-delay: 2; }
-    .payment-method:nth-child(3) { --payment-delay: 3; }
-
-    @keyframes paymentSlide {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    .payment-method:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateX(10px) scale(1.02);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .payment-img {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-      object-fit: cover;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .payment-method:hover .payment-img {
-      transform: scale(1.1) rotate(3deg);
-    }
-
-    .payment-info {
-      flex: 1;
-      text-align: left;
-    }
-
-    .payment-info h4 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-      color: var(--text-primary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .payment-info p {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .qris-section {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 2rem;
-      margin: 2rem 0;
-      text-align: center;
-      animation: qrisFloat 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes qrisFloat {
-      from { opacity: 0; transform: translateY(30px) scale(0.9); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .qris-section h3 {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: var(--text-primary);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .qris-code {
-      width: 200px;
-      height: 200px;
-      border-radius: 16px;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      margin: 0 auto 1rem;
-      cursor: pointer;
-      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      will-change: transform;
-      animation: qrisGlow 4s ease-in-out infinite;
-    }
-
-    @keyframes qrisGlow {
-      0%, 100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
-      50% { box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1); }
-    }
-
-    .qris-code:hover {
-      transform: scale(1.1) rotate(2deg);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
-    }
-
-    .qris-code:active {
-      transform: scale(1.05) rotate(2deg);
-    }
-
-    .download-btn {
-      background: rgba(255, 255, 255, 0.2);
-      color: var(--text-primary);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 0.9rem;
-      margin-top: 1rem;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-      font-family: 'Inter', sans-serif;
-      will-change: transform;
-    }
-
-    .download-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .download-btn:active {
-      transform: translateY(0) scale(1.02);
-    }
-
-    .footer-text {
-      margin-top: 2rem;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      font-style: italic;
-      line-height: 1.5;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-      animation: fadeInUp 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
-    }
-
-    .status-badge {
-      padding: 0.2rem 0.6rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-shadow: none;
-      transition: all 0.3s ease;
-    }
-
-    .status-available {
-      background: rgba(34, 197, 94, 0.3);
-      color: #ffffff;
-      border: 1px solid rgba(34, 197, 94, 0.5);
-      animation: statusPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes statusPulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    .status-coming-soon {
-      background: rgba(251, 191, 36, 0.3);
-      color: #ffffff;
-      border: 1px solid rgba(251, 191, 36, 0.5);
-    }
-
-    .notification {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: rgba(255, 255, 255, 0.95);
-      color: #1f4037;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 600;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      z-index: 10000;
-      animation: notificationSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      font-family: 'Inter', sans-serif;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    @keyframes notificationSlide {
-      from { transform: translateX(-100%) scale(0.8); opacity: 0; }
-      to { transform: translateX(0) scale(1); opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      .container, .main-content {
-        padding: 2rem;
-        margin: 0.5rem;
-        max-width: 95%;
-      }
-      
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .section-title {
-        font-size: 1.6rem;
-      }
-      
-      .product-card {
-        padding: 1.5rem;
-      }
-      
-      .qris-code {
-        width: 160px;
-        height: 160px;
-      }
-
-      .product-header {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .payment-method {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .payment-info {
-        text-align: center;
-      }
-
-      .theme-toggle {
-        top: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 1.1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container, .main-content {
-        padding: 1.5rem;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-      
-      .btn-primary, .btn-secondary {
-        width: 100%;
-      }
-      
-      .product-footer {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: stretch;
-      }
-
-      .social-links a {
-        justify-content: center;
-      }
-
-      h1 {
-        font-size: 1.6rem;
-      }
-
-      .section-title {
-        font-size: 1.4rem;
-      }
-
-      .qris-code {
-        width: 140px;
-        height: 140px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .container, .main-content {
-        padding: 1rem;
-        margin: 0.25rem;
-      }
-
-      .profile-img {
-        width: 100px;
-        height: 100px;
-      }
-
-      .product-card {
-        padding: 1rem;
-      }
-
-      .qris-section {
-        padding: 1.5rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  </style>
-</head>
-<body data-theme="dark">
-  <div class="theme-toggle" onclick="toggleTheme()">
-    <i class="fas fa-sun" id="themeIcon"></i>
-  </div>
-
-  <div class="loading-screen" id="loading">
-    <h1>DapsOffc Payment & Product</h1>
-    <div class="loading-spinner"></div>
-    <div class="loading-dots">
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-      <div class="loading-dot"></div>
-    </div>
-  </div>
-
-  <div class="container" id="intro">
-    <img src="images/damz06.jpg" alt="DapsOffc" class="profile-img">
-    <h1>DapsOffc</h1>
-    <div class="typing-text" id="introTyping"></div>
-    <div class="button-group">
-      <button class="btn-primary" onclick="goToMain()">
-        <i class="fas fa-rocket"></i> Get Started
-      </button>
-    </div>
-  </div>
-
-  <div class="main-content" id="main">
-    <img src="images/damz06.jpg" alt="DapsOffc" class="profile-img">
-    <h1>DapsOffc</h1>
-    <div class="typing-text" id="mainTyping"></div>
-    
-    <div class="social-links">
-      <a href="https://wa.me/62895387744400" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        <span>WhatsApp Account</span>
-      </a>
-    
-             
-      <a href="https://t.me/DapsOfficial28" target="_blank">
-        <i class="fab fa-telegram"></i>
-        <span>Telegram Account</span>
-      </a>
-    </div>
-    <div class="button-group">
-      <button class="btn-primary" onclick="showSection('shop')">
-        <i class="fas fa-shopping-bag"></i> Our Product
-      </button>
-      <button class="btn-primary" onclick="showSection('payment')">
-        <i class="fas fa-credit-card"></i> Payment Options
-      </button>
-    </div>
-    
-    <div class="footer-text">
-      <p>"barang siapa yang bersungguh-sungguh, pasti akan mendapatkan nya.."</p>
-      <p style="margin-top: 1rem; font-size: 0.75rem;">© 2023-2025 DapsOffc
-      .</p>
-    </div>
-  </div>
-
-  <div class="main-content" id="shop" style="display:none;">
-    <div class="section-title">
-      <i class="fas fa-store"></i>
-      DapsOffc
-    </div>
-    
-    <div class="product-grid">
-      <div class="product-card">
-        <div class="product-header">
-          <img src="images/thundernova.jpg" alt="Telegram Bot" class="product-img">
-          <div class="product-info">
-            <h3><i class="fab fa-telegram"></i> Sc Thunder Nova [Tele]</h3>
-            <span class="product-category">Bot Telegram</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Bot Telegram Untuk Mengirim Bug/Virus Kepada Riper.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 25.000/ IDR.</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-header">
-          <img src="images/asmodeus.jpg" alt="Telegram Bot" class="product-img">
-          <div class="product-info">
-            <h3><i class="fab fa-whatsapp"></i> Sc Asmodeus [Telegram]</h3>
-            <span class="product-category">Bot Telegram</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Bot Telegram Untuk Mengirim Bug/Virus Kepada Riper.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 25.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-      
-<div class="product-card">
-        <div class="product-header">
-          <img src="images/otax.jpg" alt="Telegram Bot" class="product-img">
-          <div class="product-info">
-            <h3><i class="fab fa-whatsapp"></i> Sc OtaX [Telegram]</h3>
-            <span class="product-category">Bot Telegram</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Bot Telegram Untuk Mengirim Bug/Virus Kepada Riper.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 30.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-      
-<div class="product-card">
-        <div class="product-header">
-          <img src="images/daff123.jpg" alt="Nokos All Negara" class="product-img">
-          <div class="product-info">
-            <h3><i class="fab fa-whatsapp"></i> Nomer Kosong [nokos]</h3>
-            <span class="product-category">Ready All Negara</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Nomor Yang Bisa Anda Gunakan Untuk Apa Saja Tanpa Harus Membeli kartu.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 8.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-      
-<div class="product-card">
-        <div class="product-header">
-          <img src="images/dapsjasbug.jpg" alt="Jasa Bug" class="product-img">
-          <div class="product-info">
-            <h3><i class="fab fa-whatsapp"></i> Jasbug By DapsOffc </h3>
-            <span class="product-category">Jasbug By DapsOffc</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Siap Melayani Jasa Bug Kepada Orang Yang Jahat Kepada Anda.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 5.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>                                          
-
-      <div class="product-card">
-        <div class="product-header">
-          <img src="images/a0612.jpg" alt="Custom Logo" class="product-img">
-          <div class="product-info">
-            <h3><i class="fas fa-code"></i> Jasa Buat Logo Untuk Profil/Thumbnail Sc</h3>
-            <span class="product-category">Bebas Request</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Jasa Membuat Logo Untuk Profil Bisnis Anda Dan Juga Bisa Digunakan Sebagai Thumbnail Sc.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 10.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="product-header">
-          <img src="images/a0612.jpg" alt="Panel Pterodactyl" class="product-img">
-          <div class="product-info">
-            <h3><i class="fas fa-globe"></i> Panel Untuk Run Sc</h3>
-            <span class="product-category">Powered By Pterodactyl</span>
-          </div>
-        </div>
-        <p class="product-description">
-          Sebuah Server Yang Dirancang Khusus Untuk Menjalankan Script WA/Tele Anda.
-        </p>
-        <div class="product-footer">
-          <span class="product-price">Starting from 2.000 IDR</span>
-          <a href="https://t.me/DapsOfficial28" target="_blank" class="btn-primary">
-            <i class="fas fa-shopping-cart"></i> Order Now
-          </a>
-        </div>
-      </div>
-    </div>
-    
-    <button class="btn-secondary" onclick="backToMain()">
-      <i class="fas fa-arrow-left"></i> Back to Main
-    </button>
-  </div>
-
-  <div class="main-content" id="payment" style="display:none;">
-    <div class="section-title">
-      <i class="fas fa-credit-card"></i>
-      Payment Methods
-    </div>
-    
-   <div class="payment-method">
-      <img src="images/dana.jpg" class="payment-img" alt="Dana">
-      <div class="payment-info">
-        <h4><i class="fas fa-wallet"></i> Dana Digital Wallet</h4>
-        <p>Fast and secure payment via Dana e-wallet</p>
-      </div>
-      <div style="text-align: right;">
-        <span class="status-badge status-available">Available</span>
-        <button class="btn-primary" onclick="copyNumber('0895387744400')" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.9rem;">
-          <i class="fas fa-copy"></i> Copy Number
-        </button>
-      </div>
-    </div>
-
-      <div class="payment-method">
-      <img src="images/ovo.jpg" class="payment-img" alt="SPay">
-       <div class="payment-info">
-        <h4><i class="fas fa-wallet"></i> ShopeePay Digital Payment</h4>
-        <p>Fast and secure payment via ShopeePay Digital Payment</p>
-      </div>
-      <div style="text-align: right;">
-        <span class="status-badge status-available">Available</span>
-        <button class="btn-primary" onclick="copyNumber('0895387744400')" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.9rem;">
-          <i class="fas fa-copy"></i> Copy Number
-        </button>
-      </div>
-    </div>
-
-    <div class="payment-method">
-      <img src="images/gopay.jpg" class="payment-img" alt="GoPay">
-      <div class="payment-info">
-   <div class="payment-info">
-        <h4><i class="fas fa-wallet"></i> GoPay integration</h4>
-        <p>Fast and secure payment via GoPay payment</p>
-      </div>
-      <div style="text-align: right;">
-        <span class="status-badge status-available">Available</span>
-        <button class="btn-primary" onclick="copyNumber('0895387744400')" style="margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.9rem;">
-          <i class="fas fa-copy"></i> Copy Number
-        </button>
-      </div>
-    </div>
-
-    <div class="qris-section">
-      <h3><i class="fas fa-qrcode"></i> Universal QRIS Payment</h3>
-      <img src="images/d03zep.jpg" alt="QRIS Code" class="qris-code" id="qrisImage">
-      <p style="color: var(--text-secondary); margin-top: 1rem;">
-        Jangan Lupa Sertakan Bukti Transaksi!! 
-      </p>
-      <button class="download-btn" onclick="downloadQRIS()">
-        <i class="fas fa-download"></i> Download QRIS
-      </button>
-    </div>
-
-    
-
-    <button class="btn-secondary" onclick="backToMain()">
-      <i class="fas fa-arrow-left"></i> Back to Main
-    </button>
-  </div>
-
-  <audio id="audio" src="media/dapss.mp3" preload="auto"></audio>
-
-  <script>
-    const loading = document.getElementById('loading');
-    const intro = document.getElementById('intro');
-    const main = document.getElementById('main');
-    const audio = document.getElementById('audio');
-    const themeIcon = document.getElementById('themeIcon');
-
-    const texts = ["Hello, I'm DapsOffc.", "Web Developer. Code Dreamer.", "From idea to launch.", "Click - Type - Create.", "Welcome to my world."];
-    
-    function typeText(el, words) {
-      let index = 0, char = 0, isComplete = false;
-      function type() {
-        if (!isComplete && index < words.length) {
-          if (char <= words[index].length) {
-            el.textContent = words[index].slice(0, char++);
-            setTimeout(type, 80);
-          } else {
-            index++; char = 0;
-            setTimeout(type, 1000);
-          }
-        } else if (!isComplete) {
-          isComplete = true;
-          el.innerHTML += "<br><span style='color: rgba(255, 255, 255, 0.9); font-weight: 500;'>Transforming Ideas into Digital Solutions</span>";
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPAMER TELE BY KZ MODZ - OFFCIAL </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0ea5e9;
+            --accent: #8b5cf6;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --card-border: rgba(255, 255, 255, 0.08);
         }
-      }
-      type();
-    }
-
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      body.setAttribute('data-theme', newTheme);
-      themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-      
-      localStorage.setItem('theme', newTheme);
-    }
-
-    function loadTheme() {
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      document.body.setAttribute('data-theme', savedTheme);
-      themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    }
-
-    window.onload = () => {
-      loadTheme();
-      setTimeout(() => {
-        loading.style.display = 'none';
-        intro.style.display = 'block';
-        typeText(document.getElementById("introTyping"), texts);
-      }, 4000);
-    };
-
-    function goToMain() {
-      intro.style.display = 'none';
-      main.style.display = 'block';
-      audio.play().catch(e => console.log('Audio autoplay prevented'));
-      typeText(document.getElementById("mainTyping"), texts);
-    }
-
-    function showSection(section) {
-      document.querySelectorAll('.main-content').forEach(el => el.style.display = 'none');
-      document.getElementById(section).style.display = 'block';
-    }
-
-    function backToMain() {
-      document.querySelectorAll('.main-content').forEach(el => el.style.display = 'none');
-      main.style.display = 'block';
-    }
-
-    function copyNumber(number) {
-      navigator.clipboard.writeText(number).then(() => {
-        showNotification(`<i class="fas fa-check-circle"></i> Number copied: ${number}`);
-      }).catch(() => {
-        showNotification(`<i class="fas fa-exclamation-circle"></i> Failed to copy. Please copy manually: ${number}`);
-      });
-    }
-
-    function downloadQRIS() {
-      const qrisImage = document.getElementById('qrisImage');
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      
-      img.crossOrigin = 'anonymous';
-      img.onload = function() {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
         
-        const link = document.createElement('a');
-        link.download = 'IMG-QRIS-Payment.png';
-        link.href = canvas.toDataURL();
-        link.click();
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
-        showNotification(`<i class="fas fa-download"></i> QRIS downloaded successfully!`);
-      };
-      
-      img.src = qrisImage.src;
-    }
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .navbar {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--light);
+        }
+        
+        .navbar-brand i {
+            color: var(--primary);
+        }
+        
+        .brand-highlight {
+            color: var(--primary);
+            font-weight: 800;
+        }
+        
+        .navbar-menu {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .navbar-menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .navbar-menu a:hover {
+            color: var(--primary);
+            background: rgba(37, 99, 235, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .stat-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-change {
+            font-size: 0.9rem;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            font-size: 16px;
+            color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .input-with-tag {
+            position: relative;
+        }
+        
+        .input-tag {
+            position: absolute;
+            right: 15px;
+            top: 14px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .stats div {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .success {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #a7f3d0;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .error {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #fecaca;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .info {
+            background-color: rgba(59, 130, 246, 0.15);
+            color: #bfdbfe;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .sent-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .message-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .message-item.success {
+            border-left-color: var(--success);
+        }
+        
+        .message-item.error {
+            border-left-color: var(--danger);
+        }
+        
+        .delay-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .delay-control input {
+            flex: 1;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .admin-contact {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(37, 211, 102, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid rgba(37, 211, 102, 0.2);
+        }
+        
+        .admin-contact i {
+            font-size: 2rem;
+            color: #25d366;
+        }
+        
+        .admin-contact a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .admin-contact a:hover {
+            text-decoration: underline;
+            color: #25d366;
+        }
+        
+        footer {
+            background: rgba(30, 41, 59, 0.95);
+            padding: 25px;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .navbar-menu {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+        
+        .emoji-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .emoji-item {
+            font-size: 1.5rem;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .bot-selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bot-option {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--card-border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .bot-option:hover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .bot-option.active {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        
+        .bot-option i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .token-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fab fa-telegram"></i>
+            <span>SPAMER <span class="brand-highlight">TELE</span> BY <span class="brand-highlight">KZ MODZ</span></span>
+        </div>
+        <div class="navbar-menu">
+            <a href="#"><i class="fas fa-home"></i> Home</a>
+            <a href="#"><i class="fas fa-code"></i> API</a>
+            <a href="#"><i class="fas fa-book"></i> Dokumentasi</a>
+            <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+        </div>
+    </nav>
 
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.className = 'notification';
-      notification.innerHTML = message;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.style.animation = 'notificationSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1) reverse';
-        setTimeout(() => notification.remove(), 600);
-      }, 3000);
-    }
+    <div class="container">
+        <div class="dashboard">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">Total Pesan Terkirim</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                </div>
+                <div class="stat-value">1,248</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 24% dari bulan lalu
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">Pesan Berhasil</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-value">92%</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 3% dari bulan lalu
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">Bot Aktif</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 2 bot tersedia
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">Pengguna</div>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-value">128</div>
+                <div class="stat-change">
+                    <i class="fas fa-arrow-up"></i> 12 pengguna baru
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-cog"></i> Konfigurasi Bot</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pilih Jumlah Bot</label>
+                    <div class="bot-selection">
+                        <div class="bot-option active" data-bots="1">
+                            <i class="fas fa-robot"></i>
+                            <h3>1 Bot</h3>
+                            <p>Gunakan satu bot untuk pengiriman</p>
+                        </div>
+                        <div class="bot-option" data-bots="2">
+                            <i class="fas fa-robots"></i>
+                            <h3>2 Bot</h3>
+                            <p>Gunakan dua bot untuk pengiriman lebih cepat</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="singleBotToken">
+                    <label for="botToken">Token Bot Telegram</label>
+                    <div class="input-with-tag">
+                        <input type="text" id="botToken" value="8462747701:AAE4la0120m3NRvBE0i3_4R3TtQ4OhzNn8U" readonly>
+                        <span class="input-tag">Aktif</span>
+                    </div>
+                </div>
+                
+                <div class="form-group" id="dualBotTokens" style="display: none;">
+                    <label>Token Bot Telegram (Dual Bot)</label>
+                    <div class="token-info">
+                        <strong>Bot 1:</strong> 8462747701:AAE4la0120m3NRvBE0i3_4R3TtQ4OhzNn8U
+                    </div>
+                    <div class="token-info">
+                        <strong>Bot 2:</strong> 7501718220:AAFt3zBPURhhpKJTzZQSS033HOLAC0wDM-I
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="chatId">ID Chat Target <span class="badge">Required</span></label>
+                    <input type="text" id="chatId" placeholder="Masukkan ID chat tujuan (contoh: 123456789)" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Pesan yang akan dikirim <span class="badge">Required</span></label>
+                    <textarea id="message" placeholder="Tulis pesan yang akan dikirim" required>Halo! Ini adalah pesan dari SPAMER TELE BY KZ MODZ 🚀</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="emojiMode">Mode Emoji</label>
+                    <select id="emojiMode">
+                        <option value="none">Tidak pakai emoji</option>
+                        <option value="random" selected>Emoji acak di akhir pesan</option>
+                        <option value="numbered">Pesan dengan numbering + emoji</option>
+                    </select>
+                    
+                    <div class="emoji-preview">
+                        <div class="emoji-item">👹</div>
+                        <div class="emoji-item">🔥</div>
+                        <div class="emoji-item">😈</div>
+                        <div class="emoji-item">💀</div>
+                        <div class="emoji-item">🤖</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageCount">Jumlah Pesan <span class="badge">Required</span></label>
+                    <input type="number" id="messageCount" min="1" max="1000" value="5" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="delay">Jeda antar pesan (milidetik)</label>
+                    <div class="delay-control">
+                        <input type="range" id="delayRange" min="0" max="5000" step="100" value="1000">
+                        <input type="number" id="delay" min="0" max="10000" value="1000" required>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button id="sendButton" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Mulai Mengirim
+                    </button>
+                    <button id="stopButton" class="btn-danger" disabled>
+                        <i class="fas fa-stop"></i>
+                        Berhenti
+                    </button>
+                    <button id="testButton" class="btn-success">
+                        <i class="fas fa-vial"></i>
+                        Test Koneksi
+                    </button>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="stats">
+                    <div id="sentCount">Terkirim: 0</div>
+                    <div id="remainingCount">Tersisa: 0</div>
+                    <div id="successCount">Berhasil: 0</div>
+                    <div id="errorCount">Gagal: 0</div>
+                    <div id="botCountDisplay">Bot Aktif: 1</div>
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Mengirim pesan...</p>
+                </div>
+                
+                <div class="result" id="result"></div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-history"></i> Riwayat Pesan Terkirim</h2>
+                </div>
+                
+                <div class="sent-messages" id="sentMessages">
+                    <div class="message-item">
+                        <strong>Pesan akan muncul di sini...</strong>
+                        <div>Status: Menunggu pengiriman</div>
+                    </div>
+                </div>
+                
+                <div class="admin-contact">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        <h3>Butuh Bantuan?</h3>
+                        <p>Hubungi admin kami melalui WhatsApp</p>
+                        <a href="https://wa.me/6285351952977" target="_blank">
+                            <i class="fab fa-whatsapp"></i> +62 853-5195-2977
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> Cara Menggunakan:</h3>
+                    <ul>
+                        <li>Pilih jumlah bot yang ingin digunakan (1 atau 2 bot)</li>
+                        <li>Token bot sudah terisi otomatis</li>
+                        <li>Dapatkan ID chat target dengan mengirim pesan ke bot @userinfobot</li>
+                        <li>Masukkan ID chat, lalu tulis pesan yang ingin dikirim</li>
+                        <li>Atur jumlah pesan dan jeda antar pengiriman</li>
+                        <li>Klik "Mulai Mengirim" untuk memulai</li>
+                        <li>Gunakan "Berhenti" untuk menghentikan pengiriman</li>
+                    </ul>               JTNDcCUzRSUzQ3N0cm9uZyUzRSUzQ2klMjBjbGFzcyUzRCUyMmZhcyUyMGZhLWV4Y2xhbWF0aW9uLXRyaWFuZ2xlJTIyJTNFJTNDL2klM0UlMjBQZXJpbmdhdGFuJTNBJTNDL3N0cm9uZyUzRSUyMEphbmdhbiUyMG1lbnlhbGFoZ3VuYWthbiUyMHRvb2wlMjBpbmklMjB1bnR1ayUyMHNwYW0uJTIwR3VuYWthbiUyMGRlbmdhbiUyMGJlcnRhbmdndW5nJTIwamF3YWIuJTIwVG9sb25nJTIwamFuZ2FuJTIwZGklMjBwZXJqdWFsJTIwYmVsaWthbiUyMHNvdXJjZSUyMGNvZGUlMjB3ZWJzaXRlJTIwaW5pJTIwdGFucGElMjBzZXBlbmdldGFodWFuJTIwYWRtaW4lMjAlM0MvcCUzRSU3Q2Rpa3o=
+                </div>
+            </div>
+        </div>
+    </div>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-          }
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">SPAMER <span>TELE</span> BY <span>KZ MODZ</span></div>
+            <div class="footer-links">
+                <a href="#">Beranda</a>
+                <a href="#">Fitur</a>
+                <a href="#">Harga</a>
+                <a href="#">Blog</a>
+                <a href="#">Kontak</a>
+            </div>
+            <div class="copyright">
+                &copy; 2023 SPAMER TELE BY KZ MODZ. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendButton = document.getElementById('sendButton');
+            const stopButton = document.getElementById('stopButton');
+            const testButton = document.getElementById('testButton');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const progressBar = document.getElementById('progressBar');
+            const sentCount = document.getElementById('sentCount');
+            const remainingCount = document.getElementById('remainingCount');
+            const successCount = document.getElementById('successCount');
+            const errorCount = document.getElementById('errorCount');
+            const botCountDisplay = document.getElementById('botCountDisplay');
+            const sentMessages = document.getElementById('sentMessages');
+            const delayRange = document.getElementById('delayRange');
+            const delayInput = document.getElementById('delay');
+            const emojiMode = document.getElementById('emojiMode');
+            const botOptions = document.querySelectorAll('.bot-option');
+            const singleBotToken = document.getElementById('singleBotToken');
+            const dualBotTokens = document.getElementById('dualBotTokens');
+            
+            // Emoji list for random selection
+            const emojis = ['👹', '🔥', '😈', '💀', '🤖', '👻', '💩', '🤡', '☠️', '🎃', '😵', '🤑'];
+            
+            // Bot tokens
+            const botTokens = [
+                "8462747701:AAE4la0120m3NRvBE0i3_4R3TtQ4OhzNn8U",
+                "7501718220:AAFt3zBPURhhpKJTzZQSS033HOLAC0wDM-I"
+            ];
+            
+            let selectedBotCount = 1;
+            
+            // Bot selection logic
+            botOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    botOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedBotCount = parseInt(this.getAttribute('data-bots'));
+                    
+                    if (selectedBotCount === 1) {
+                        singleBotToken.style.display = 'block';
+                        dualBotTokens.style.display = 'none';
+                        botCountDisplay.textContent = 'Bot Aktif: 1';
+                    } else {
+                        singleBotToken.style.display = 'none';
+                        dualBotTokens.style.display = 'block';
+                        botCountDisplay.textContent = 'Bot Aktif: 2';
+                    }
+                });
+            });
+            
+            // Sync range and number inputs for delay
+            delayRange.addEventListener('input', () => {
+                delayInput.value = delayRange.value;
+            });
+            
+            delayInput.addEventListener('input', () => {
+                delayRange.value = delayInput.value;
+            });
+            
+            let isSending = false;
+            let stopRequested = false;
+            let totalMessages = 0;
+            let sentMessagesCount = 0;
+            let successfulMessages = 0;
+            let failedMessages = 0;
+            
+            sendButton.addEventListener('click', async function() {
+                if (isSending) return;
+                
+                const chatId = document.getElementById('chatId').value.trim();
+                const message = document.getElementById('message').value.trim();
+                const messageCount = parseInt(document.getElementById('messageCount').value);
+                const delay = parseInt(document.getElementById('delay').value);
+                
+                // Validasi input
+                if (!chatId || !message) {
+                    showResult('error', 'Harap isi semua field yang diperlukan.');
+                    return;
+                }
+                
+                if (messageCount < 1 || messageCount > 1000) {
+                    showResult('error', 'Jumlah pesan harus antara 1 dan 1000.');
+                    return;
+                }
+                
+                // Reset state
+                isSending = true;
+                stopRequested = false;
+                totalMessages = messageCount * selectedBotCount;
+                sentMessagesCount = 0;
+                successfulMessages = 0;
+                failedMessages = 0;
+                
+                // Update UI
+                sendButton.disabled = true;
+                stopButton.disabled = false;
+                loading.style.display = 'block';
+                result.style.display = 'none';
+                progressBar.style.width = '0%';
+                updateStats();
+                sentMessages.innerHTML = '';
+                
+                // Kirim pesan sebanyak yang diminta
+                for (let i = 0; i < messageCount; i++) {
+                    if (stopRequested) {
+                        break;
+                    }
+                    
+                    // Kirim pesan menggunakan semua bot yang dipilih
+                    for (let botIndex = 0; botIndex < selectedBotCount; botIndex++) {
+                        if (stopRequested) {
+                            break;
+                        }
+                        
+                        try {
+                            // Format pesan berdasarkan mode emoji
+                            let formattedMessage = message;
+                            const selectedEmojiMode = emojiMode.value;
+                            
+                            if (selectedEmojiMode === 'random') {
+                                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                                formattedMessage = `${message} ${randomEmoji}`;
+                            } else if (selectedEmojiMode === 'numbered') {
+                                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                                formattedMessage = `${i+1}. ${message} ${randomEmoji}`;
+                            }
+                            
+                            const response = await sendTelegramMessage(botTokens[botIndex], chatId, formattedMessage);
+                            
+                            if (response.ok) {
+                                successfulMessages++;
+                                addMessageToHistory(formattedMessage, true, `Bot ${botIndex+1}`);
+                            } else {
+                                const errorData = await response.json();
+                                console.error(`Error ${i+1} - Bot ${botIndex+1}:`, errorData);
+                                failedMessages++;
+                                addMessageToHistory(formattedMessage, false, `Bot ${botIndex+1}: ${errorData.description || 'Unknown error'}`);
+                            }
+                        } catch (error) {
+                            console.error(`Error ${i+1} - Bot ${botIndex+1}:`, error);
+                            failedMessages++;
+                            addMessageToHistory(message, false, `Bot ${botIndex+1}: ${error.message}`);
+                        }
+                        
+                        sentMessagesCount++;
+                        progressBar.style.width = `${(sentMessagesCount / totalMessages) * 100}%`;
+                        updateStats();
+                        
+                        // Jeda antara pengiriman pesan dari bot yang berbeda
+                        if (botIndex < selectedBotCount - 1 && !stopRequested) {
+                            await new Promise(resolve => setTimeout(resolve, 300));
+                        }
+                    }
+                    
+                    // Jeda antara pengiriman pesan
+                    if (i < messageCount - 1 && !stopRequested) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+                
+                // Tampilkan hasil
+                if (stopRequested) {
+                    showResult('info', `Pengiriman dihentikan. ${successfulMessages} pesan berhasil, ${failedMessages} pesan gagal.`);
+                } else {
+                    showResult('success', `Selesai mengirim ${successfulMessages} pesan. ${failedMessages} pesan gagal.`);
+                }
+                
+                // Reset state
+                isSending = false;
+                sendButton.disabled = false;
+                stopButton.disabled = true;
+                loading.style.display = 'none';
+            });
+            
+            stopButton.addEventListener('click', function() {
+                if (isSending) {
+                    stopRequested = true;
+                    stopButton.disabled = true;
+                    showResult('info', 'Menghentikan pengiriman...');
+                }
+            });
+            
+            testButton.addEventListener('click', async function() {
+                const chatId = document.getElementById('chatId').value.trim();
+                
+                if (!chatId) {
+                    showResult('error', 'Harap isi ID chat terlebih dahulu.');
+                    return;
+                }
+                
+                testButton.disabled = true;
+                testButton.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Testing...';
+                
+                try {
+                    const response = await sendTelegramMessage(botTokens[0], chatId, 'Test pesan dari SPAMER TELE BY KZ MODZ 🚀');
+                    
+                    if (response.ok) {
+                        showResult('success', 'Koneksi berhasil! Pesan test terkirim.');
+                    } else {
+                        const errorData = await response.json();
+                        showResult('error', `Test gagal: ${errorData.description || 'Unknown error'}`);
+                    }
+                } catch (error) {
+                    showResult('error', `Test gagal: ${error.message}`);
+                }
+                
+                testButton.disabled = false;
+                testButton.innerHTML = '<i class="fas fa-vial"></i> Test Koneksi';
+            });
+            
+            async function sendTelegramMessage(botToken, chatId, message) {
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                return response;
+            }
+            
+            function showResult(type, message) {
+                result.className = 'result ' + type;
+                result.innerHTML = message;
+                result.style.display = 'block';
+            }
+            
+            function updateStats() {
+                sentCount.textContent = `Terkirim: ${sentMessagesCount}`;
+                remainingCount.textContent = `Tersisa: ${totalMessages - sentMessagesCount}`;
+                successCount.textContent = `Berhasil: ${successfulMessages}`;
+                errorCount.textContent = `Gagal: ${failedMessages}`;
+            }
+            
+            function addMessageToHistory(message, success, detail = '') {
+                const messageEl = document.createElement('div');
+                messageEl.className = `message-item ${success ? 'success' : 'error'}`;
+                
+                const statusIcon = success ? '✅' : '❌';
+                const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
+                
+                messageEl.innerHTML = `
+                    <div><strong>${statusIcon} ${truncatedMessage}</strong></div>
+                    <div>${new Date().toLocaleTimeString()} - ${detail}</div>
+                `;
+                
+                sentMessages.prepend(messageEl);
+            }
+            
+            // Initialize stats
+            updateStats();
         });
-      });
-
-      document.querySelectorAll('.product-card, .payment-method').forEach(el => {
-        observer.observe(el);
-      });
-    });
-  </script>
-
-
-</div></body></html>
+    </script>
+</body>
+</html>
